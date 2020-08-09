@@ -1,0 +1,37 @@
+﻿@typeparam T
+
+<h1>@Title</h1>
+<hr />
+<Repeater Items="@Items">
+    <RepeaterContainerTemplate Context="ItemsContent">
+        <table class="table table-borderless table-sm">
+            <thead>
+                <tr>
+                    @HeaderColumns
+                </tr>
+            </thead>
+            <tbody>
+                @ItemsContent
+            </tbody>
+        </table>
+    </RepeaterContainerTemplate>
+    <ItemTemplate Context="Item">
+        <tr>
+            @BodyColumns(Item)
+        </tr>
+    </ItemTemplate>
+</Repeater>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public IEnumerable<T> Items { get; set; }
+
+    [Parameter]
+    public RenderFragment HeaderColumns { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> BodyColumns { get; set; }
+}
