@@ -17,7 +17,7 @@ namespace Domain.Enums
         // TODO: Revisit ContractOption
     }
 
-    public class QuarterBack : Position
+    public sealed class QuarterBack : Position
     {
         public QuarterBack(string name, int value) : base(name, value)
         {
@@ -29,7 +29,7 @@ namespace Domain.Enums
         }
     }
 
-    public class RunningBack : Position
+    public sealed class RunningBack : Position
     {
         public RunningBack(string name, int value) : base(name, value)
         {
@@ -41,7 +41,7 @@ namespace Domain.Enums
         }
     }
 
-    public class WideReceiver : Position
+    public sealed class WideReceiver : Position
     {
         public WideReceiver(string name, int value) : base(name, value)
         {
@@ -53,7 +53,7 @@ namespace Domain.Enums
         }
     }
 
-    public class TightEnd : Position
+    public sealed class TightEnd : Position
     {
         public TightEnd(string name, int value) : base(name, value)
         {
@@ -65,7 +65,7 @@ namespace Domain.Enums
         }
     }
 
-    public class Defense : Position
+    public sealed class Defense : Position
     {
         public Defense(string name, int value) : base(name, value)
         {

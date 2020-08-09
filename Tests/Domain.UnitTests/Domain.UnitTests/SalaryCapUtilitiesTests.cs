@@ -2,7 +2,7 @@ using Domain.Utilities;
 using FluentAssertions;
 using Xunit;
 
-namespace Application.UnitTests
+namespace Domain.UnitTests
 {
     public class SalaryCapUtilitiesTests
     {

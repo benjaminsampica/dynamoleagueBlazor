@@ -28,35 +28,15 @@ namespace Infrastructure.Identity.Services
             return (result.ToApplicationResult(), user.Id);
         }
 
-        public async Task<Result> DeleteUserAsync(string userId)
-        {
-            var user = await GetByIdAsync(userId);
-
-            if (user != null)
-            {
-                return await DeleteUserAsync(user);
-            }
-
-            return Result.Success();
-        }
-
-
-        public async Task<Result> DeleteUserAsync(ApplicationUser user)
-        {
-            var result = await _userManager.DeleteAsync(user);
-
-            return result.ToApplicationResult();
-        }
-
         public async Task<Result> AddToRoleAsync(string userId, string role)
         {
-            var user = await GetByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            var result = await _userManager.AddToRoleAsync(user, role);
+            var result = user != null 
+                ? await _userManager.AddToRoleAsync(user, role) 
+                : IdentityResult.Failed(new IdentityError { Description = "User not found." });
 
             return result.ToApplicationResult();
         }
-
-        private async Task<ApplicationUser> GetByIdAsync(string userId) => await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId);
     }
 }

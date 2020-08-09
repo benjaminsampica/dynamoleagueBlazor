@@ -11,9 +11,9 @@ namespace Application.Common.Models
             Errors = errors.ToArray();
         }
 
-        public bool Succeeded { get; set; }
+        public bool Succeeded { get; protected set; }
 
-        public string[] Errors { get; set; }
+        public string[] Errors { get; protected set; }
 
         public static Result Success()
         {
