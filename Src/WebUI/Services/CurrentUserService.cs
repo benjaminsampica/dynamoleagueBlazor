@@ -19,9 +19,9 @@ namespace WebUI.Services
         {
             var result = await _provider.GetAuthenticationStateAsync();
             var teamIdString = result?.User?.FindFirstValue(nameof(ApplicationUser.TeamId));
-            int.TryParse(teamIdString, out int teamidInt);
+            int.TryParse(teamIdString, out int teamIdInt);
 
-            return teamidInt;
+            return teamIdInt;
         }
     }
 }
