@@ -2,6 +2,7 @@
 using Common;
 using Infrastructure.Email;
 using Infrastructure.Identity;
+using Infrastructure.Identity.Claims;
 using Infrastructure.Identity.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,7 +28,8 @@ namespace Infrastructure
             services
                 .AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationIdentityDbContext>();
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddClaimsPrincipalFactory<CurrentUserClaimsFactory>();
 
             services.Configure<IdentityOptions>(options =>
             {

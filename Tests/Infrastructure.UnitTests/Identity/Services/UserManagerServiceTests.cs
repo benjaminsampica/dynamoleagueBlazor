@@ -14,7 +14,7 @@ namespace Infrastructure.UnitTests.Identity.Services
         public async Task CreateUserAsync_Successful_ReturnsSuccessResult()
         {
             var sut = new UserManagerService(TestUserManager.GetSuccessfulManager());
-            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty);
+            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty, int.MaxValue);
 
             result.Succeeded.Should().BeTrue();
         }
@@ -23,7 +23,7 @@ namespace Infrastructure.UnitTests.Identity.Services
         public async Task CreateUserAsync_Failed_ReturnsFailedResult()
         {
             var sut = new UserManagerService(TestUserManager.GetFailedManager());
-            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty);
+            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty, int.MaxValue);
 
             result.Succeeded.Should().BeFalse();
         }
@@ -42,6 +42,25 @@ namespace Infrastructure.UnitTests.Identity.Services
         {
             var sut = new UserManagerService(TestUserManager.GetFailedManager());
             var result = await sut.AddToRoleAsync(string.Empty, string.Empty);
+
+            result.Succeeded.Should().BeFalse();
+            result.Errors[0].Should().BeEquivalentTo("User not found.");
+        }
+
+        [Fact]
+        public async Task AddToTeamAsync_UserFound_ReturnsSuccessResult()
+        {
+            var sut = new UserManagerService(TestUserManager.GetSuccessfulManager());
+            var result = await sut.AddToTeamAsync(string.Empty, int.MaxValue);
+
+            result.Succeeded.Should().BeTrue();
+        }
+
+        [Fact]
+        public async Task AddToTeamAsync_UserNotFound_ReturnsFailedResult()
+        {
+            var sut = new UserManagerService(TestUserManager.GetFailedManager());
+            var result = await sut.AddToTeamAsync(string.Empty, int.MaxValue);
 
             result.Succeeded.Should().BeFalse();
             result.Errors[0].Should().BeEquivalentTo("User not found.");
@@ -65,5 +84,6 @@ namespace Infrastructure.UnitTests.Identity.Services
         public override Task<IdentityResult> CreateAsync(ApplicationUser role, string password) => GetIdentityResultTask();
         public override Task<ApplicationUser> FindByIdAsync(string userId) => Task.FromResult(Success ? new ApplicationUser() : null);
         public override Task<IdentityResult> AddToRoleAsync(ApplicationUser user, string role) => GetIdentityResultTask();
+        public override Task<IdentityResult> UpdateAsync(ApplicationUser user) => GetIdentityResultTask();
     }
 }

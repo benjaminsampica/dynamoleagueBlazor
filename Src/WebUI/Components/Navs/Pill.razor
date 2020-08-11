@@ -1,0 +1,11 @@
+﻿@implements INavItem
+
+<a class="nav-link" @onclick="OnClickEventCallBack" @onclick:preventDefault>
+    <i class="fas fa-@Icon mr-1"></i>@Text
+</a>
+
+@code {
+    [Parameter] public string Text { get; set; }
+    [Parameter] public string Icon { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClickEventCallBack { get; set; }
+}

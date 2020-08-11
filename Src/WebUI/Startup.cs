@@ -1,14 +1,16 @@
 using Application;
-using DynamoLeague.Areas.Identity;
+using Application.Common.Interfaces;
 using Infrastructure;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using WebUI.Areas.Identity;
+using WebUI.Services;
 
 namespace WebUI
 {
@@ -30,7 +32,8 @@ namespace WebUI
             services.AddPersistence(Configuration);
             services.AddInfrastructure(Configuration);
             services.AddApplication();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

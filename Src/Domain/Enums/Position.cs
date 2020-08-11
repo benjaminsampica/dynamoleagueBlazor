@@ -4,11 +4,11 @@ namespace Domain.Enums
 {
     public abstract class Position : SmartEnum<Position>
     {
-        public static readonly Position QuarterBack = new QuarterBack("QB", 1);
-        public static readonly Position RunningBack = new RunningBack("RB", 2);
-        public static readonly Position WideReceiver = new WideReceiver("WR", 3);
-        public static readonly Position TightEnd = new TightEnd("TE", 4);
-        public static readonly Position Defense = new Defense("DEF", 5);
+        public static readonly Position QuarterBack = new QuarterBack();
+        public static readonly Position RunningBack = new RunningBack();
+        public static readonly Position WideReceiver = new WideReceiver();
+        public static readonly Position TightEnd = new TightEnd();
+        public static readonly Position Defense = new Defense();
 
         public Position(string name, int value) : base(name, value) { }
 
@@ -19,7 +19,7 @@ namespace Domain.Enums
 
     public sealed class QuarterBack : Position
     {
-        public QuarterBack(string name, int value) : base(name, value)
+        public QuarterBack() : base("QB", 1)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Domain.Enums
 
     public sealed class RunningBack : Position
     {
-        public RunningBack(string name, int value) : base(name, value)
+        public RunningBack() : base("RB", 2)
         {
         }
 
@@ -43,7 +43,7 @@ namespace Domain.Enums
 
     public sealed class WideReceiver : Position
     {
-        public WideReceiver(string name, int value) : base(name, value)
+        public WideReceiver() : base("WR", 3)
         {
         }
 
@@ -55,7 +55,7 @@ namespace Domain.Enums
 
     public sealed class TightEnd : Position
     {
-        public TightEnd(string name, int value) : base(name, value)
+        public TightEnd() : base("TE", 4)
         {
         }
 
@@ -67,7 +67,7 @@ namespace Domain.Enums
 
     public sealed class Defense : Position
     {
-        public Defense(string name, int value) : base(name, value)
+        public Defense() : base("DEF", 5)
         {
         }
 

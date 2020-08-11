@@ -4,16 +4,18 @@
 <hr />
 <Repeater Items="@Items">
     <RepeaterContainerTemplate Context="ItemsContent">
-        <table class="table table-borderless table-sm">
-            <thead>
-                <tr>
-                    @HeaderColumns
-                </tr>
-            </thead>
-            <tbody>
-                @ItemsContent
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm">
+                <thead>
+                    <tr>
+                        @HeaderColumns
+                    </tr>
+                </thead>
+                <tbody>
+                    @ItemsContent
+                </tbody>
+            </table>
+        </div>
     </RepeaterContainerTemplate>
     <ItemTemplate Context="Item">
         <tr>

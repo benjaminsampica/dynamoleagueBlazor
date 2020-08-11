@@ -8,6 +8,6 @@ namespace Infrastructure.Identity
         public ApplicationRole(string roleName) : base(roleName) { }
 
         public const string Admin = "Admin";
-        public const string User = "Admin";
+        public const string User = "User";
     }
 }

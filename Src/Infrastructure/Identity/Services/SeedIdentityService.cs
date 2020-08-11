@@ -18,7 +18,7 @@ namespace Infrastructure.Identity.Services
         {
             await _roleManager.AddRoleAsync(ApplicationRole.Admin);
             await _roleManager.AddRoleAsync(ApplicationRole.User);
-            var (_, benUserId) = await _userManager.CreateUserAsync("benjamin.sampica@gmail.com", "hunter2");
+            var (_, benUserId) = await _userManager.CreateUserAsync("benjamin.sampica@gmail.com", "hunter2", 1);
 
             await _userManager.AddToRoleAsync(benUserId, ApplicationRole.Admin);
         }

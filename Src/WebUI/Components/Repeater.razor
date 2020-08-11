@@ -52,7 +52,8 @@ else
 
     protected override void OnParametersSet()
     {
-        // Create empty template in case the user doesn't provide it
+        ItemTemplate = ItemTemplate ?? throw new ArgumentNullException(nameof(ItemTemplate));
+
         if (RepeaterContainerTemplate == null)
         {
             RepeaterContainerTemplate = new RenderFragment<RenderFragment>(fragment => fragment);

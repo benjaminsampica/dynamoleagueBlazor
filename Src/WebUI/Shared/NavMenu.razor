@@ -1,5 +1,5 @@
 ﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container">
         <a class="navbar-brand" href="/">
             <img src="/images/logo.png" height="25" />
             Fantasy Football
@@ -29,7 +29,7 @@
                     </ul>
                 </Authorized>
             </AuthorizeView>
-            <AuthorizeView>
+            <AuthorizeView Roles="@ApplicationRole.Admin">
                 <ul class="navbar-nav nav-right">
                     <li class="nav-item">
                         <NavLink class="nav-link" href="" Match="NavLinkMatch.All">

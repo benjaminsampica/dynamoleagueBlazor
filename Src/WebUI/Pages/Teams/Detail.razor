@@ -1,0 +1,54 @@
+﻿@page "/Details/{id:int}"
+@inject IMediator _mediator
+@inject NavigationManager _navigation
+@using MediatR
+@using Application.Teams.Queries
+
+@if (ViewModel == null)
+{
+    <Loading></Loading>
+}
+else
+{
+    <div class="row">
+        <div class="col-xl-3">
+            <AsideDetail Title="@ViewModel.TeamName" ImageUrl="@ViewModel.TeamLogoUrl">
+                <DetailsContent>
+                    <p>
+                        @ViewModel.CapSpace.ToString("C0")
+                    </p>
+                </DetailsContent>
+                <LinksContent>
+                    <Pill Icon="users" Text="Rostered Players" OnClickEventCallBack="SetPlayers"></Pill>
+                </LinksContent>
+            </AsideDetail>
+        </div>
+    </div>
+}
+
+
+
+@code {
+    private TeamDetailsDto ViewModel { get; set; }
+
+    [Parameter] public int Id { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        Id = Id != default ? Id : throw new ArgumentNullException(nameof(Id));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ViewModel = await _mediator.Send(new GetTeamDetailsQuery(Id));
+        if (ViewModel == null)
+        {
+            _navigation.NavigateTo("/404");
+        }
+    }
+
+    public async Task SetPlayers()
+    {
+
+    }
+}
