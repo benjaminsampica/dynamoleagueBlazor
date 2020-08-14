@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
+﻿using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Components;
 using WebUI.Models.Basics;
 
 namespace WebUI.Views.Components
@@ -25,10 +25,10 @@ namespace WebUI.Views.Components
             }
         }
 
-        private void VerifyParameters()
+        internal void VerifyParameters()
         {
-            Name = Name ?? throw new ArgumentNullException(nameof(Name));
-            ThumbnailUrl = ThumbnailUrl ?? throw new ArgumentNullException(nameof(ThumbnailUrl));
+            Name = Guard.Against.NullOrWhiteSpace(Name, nameof(Name)); ;
+            ThumbnailUrl = Guard.Against.NullOrWhiteSpace(ThumbnailUrl, nameof(ThumbnailUrl)); ;
         }
     }
 }

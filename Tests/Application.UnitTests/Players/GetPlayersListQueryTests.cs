@@ -29,7 +29,7 @@ namespace Application.UnitTests.Teams.Queries
             var result = await sut.Handle(new GetPlayersListQuery(1));
 
             result.Should().HaveCount(1);
-            result.Should().BeOfType<ReadOnlyCollection<TeamListDto>>();
+            result.Should().BeOfType<ReadOnlyCollection<PlayerListDto>>();
         }
     }
 }

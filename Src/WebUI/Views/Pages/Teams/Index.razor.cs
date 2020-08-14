@@ -19,7 +19,7 @@ namespace WebUI.Views.Pages.Teams
         {
             try
             {
-                Teams = await Mediator.Send(new GetTeamsListQuery());
+                await SetTeamsAsync();
 
                 ComponentState = ComponentState.Content;
             }
@@ -30,6 +30,11 @@ namespace WebUI.Views.Pages.Teams
 
                 throw;
             }
+        }
+
+        private async Task SetTeamsAsync()
+        {
+            Teams = await Mediator.Send(new GetTeamsListQuery());
         }
     }
 }

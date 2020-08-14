@@ -11,14 +11,9 @@ namespace WebUI.Views.Components.Basics
 
         protected override void OnParametersSet()
         {
-            VerifyParameters();
-        }
-
-        private void VerifyParameters()
-        {
             try
             {
-                ChildContent = ChildContent ?? throw new ArgumentNullException(nameof(ChildContent));
+                VerifyParameters();
             }
             catch
             {
@@ -27,6 +22,11 @@ namespace WebUI.Views.Components.Basics
 
                 throw;
             }
+        }
+
+        internal void VerifyParameters()
+        {
+            ChildContent = ChildContent ?? throw new ArgumentNullException(nameof(ChildContent));
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Application.Teams.Queries;
+using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using WebUI.Models.Basics;
 
@@ -8,19 +8,14 @@ namespace WebUI.Views.Components
 {
     public partial class TeamTable : ComponentBase, IStatefulComponent
     {
-        [Parameter] public IReadOnlyCollection<TeamListDto> Teams { get; set; }
         [CascadingParameter] public ComponentState ComponentState { get; set; }
+        [Parameter] public IReadOnlyCollection<TeamListDto> Teams { get; set; }
 
         protected override void OnParametersSet()
         {
-            VerifyParameters();
-        }
-
-        private void VerifyParameters()
-        {
             try
             {
-                Teams = Teams ?? throw new ArgumentNullException(nameof(Teams));
+                VerifyParameters();
             }
             catch
             {
@@ -28,8 +23,13 @@ namespace WebUI.Views.Components
                 StateHasChanged();
 
                 throw;
-            
+
             }
+        }
+
+        internal void VerifyParameters()
+        {
+            Guard.Against.NullOrEmpty(Teams, nameof(Teams));
         }
     }
 }

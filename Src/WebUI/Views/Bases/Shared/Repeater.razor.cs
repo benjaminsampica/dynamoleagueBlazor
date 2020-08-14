@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
+﻿using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 
 namespace WebUI.Views.Bases.Shared
@@ -20,7 +20,12 @@ namespace WebUI.Views.Bases.Shared
 
         protected override void OnParametersSet()
         {
-            ItemTemplate = ItemTemplate ?? throw new ArgumentNullException(nameof(ItemTemplate));
+            VerifyParameters();
+        }
+
+        internal void VerifyParameters()
+        {
+            Guard.Against.Null(ItemTemplate, nameof(ItemTemplate));
         }
     }
 }
