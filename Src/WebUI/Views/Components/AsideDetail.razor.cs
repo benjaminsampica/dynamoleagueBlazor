@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Components;
 using System;
 using WebUI.Models.Basics;
 using WebUI.Views.Bases.Navs;
@@ -41,8 +42,8 @@ namespace WebUI.Views.Components
             {
                 throw new ArgumentNullException(nameof(ChildContent), "Either ChildContent and DetailsContent must be supplied.");
             }
-            Title = Title ?? throw new ArgumentNullException(nameof(Title));
-            ImageUrl = ImageUrl ?? throw new ArgumentNullException(nameof(ImageUrl));
+            Guard.Against.NullOrWhiteSpace(Title, nameof(Title));
+            Guard.Against.NullOrWhiteSpace(ImageUrl, nameof(ImageUrl));
         }
     }
 }

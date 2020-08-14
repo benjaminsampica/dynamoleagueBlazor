@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
+﻿using Ardalis.GuardClauses;
+using Microsoft.AspNetCore.Components;
 using WebUI.Models.Basics;
 
 namespace WebUI.Views.Components.Basics
@@ -28,7 +28,7 @@ namespace WebUI.Views.Components.Basics
 
         internal void VerifyParameters()
         {
-            ChildContent = ChildContent ?? throw new ArgumentNullException(nameof(ChildContent));
+            Guard.Against.Null(ChildContent, nameof(ChildContent));
         }
     }
 }

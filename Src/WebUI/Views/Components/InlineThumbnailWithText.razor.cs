@@ -27,8 +27,8 @@ namespace WebUI.Views.Components
 
         internal void VerifyParameters()
         {
-            Name = Guard.Against.NullOrWhiteSpace(Name, nameof(Name)); ;
-            ThumbnailUrl = Guard.Against.NullOrWhiteSpace(ThumbnailUrl, nameof(ThumbnailUrl)); ;
+            Guard.Against.NullOrWhiteSpace(Name, nameof(Name)); ;
+            Guard.Against.NullOrWhiteSpace(ThumbnailUrl, nameof(ThumbnailUrl)); ;
         }
     }
 }

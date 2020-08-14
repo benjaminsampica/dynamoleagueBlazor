@@ -21,10 +21,10 @@ namespace WebUI.Views.Bases.Navs
 
         internal void VerifyParameters()
         {
-            OutlineClass = Guard.Against.NullOrWhiteSpace(OutlineClass, nameof(OutlineClass));
-            Title = Guard.Against.NullOrWhiteSpace(Title, nameof(Title));
-            Href = Guard.Against.NullOrWhiteSpace(Href, nameof(Href));
-            Icon = Guard.Against.NullOrWhiteSpace(Icon, nameof(Icon));
+            Guard.Against.NullOrWhiteSpace(OutlineClass, nameof(OutlineClass));
+            Guard.Against.NullOrWhiteSpace(Title, nameof(Title));
+            Guard.Against.NullOrWhiteSpace(Href, nameof(Href));
+            Guard.Against.NullOrWhiteSpace(Icon, nameof(Icon));
         }
     }
 }
