@@ -1,0 +1,16 @@
+﻿@typeparam T
+
+@RepeaterContainerTemplate(
+@:@{
+    var first = true;
+    foreach (var item in Items)
+    {
+        if (!first && ItemSeparatorTemplate != null)
+        {
+            @ItemSeparatorTemplate
+        }
+        @ItemTemplate(item);
+        first = false;
+    }
+}
+)

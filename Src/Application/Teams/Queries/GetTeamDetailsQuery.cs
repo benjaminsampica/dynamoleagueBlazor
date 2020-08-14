@@ -41,7 +41,7 @@ namespace Application.Teams.Queries
                     .ProjectTo<TeamDetailsDto>(_mapper.ConfigurationProvider)
                     .SingleOrDefaultAsync(cancellationToken);
 
-                if(teamDto != null)
+                if (teamDto != null)
                 {
                     teamDto.IsCurrentUserTeam = await _currentUserService.GetTeamIdAsync() == request.TeamId;
                 }

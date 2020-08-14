@@ -50,7 +50,7 @@ namespace Application.Teams.Queries
         public int CapSpace { get; set; }
 
         public void Mapping(Profile profile)
-        {            
+        {
             profile.CreateMap<Team, TeamListDto>()
                 .ForMember(p => p.PlayerCount, mo => mo.MapFrom(t => t.Players.Count))
                 .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.Players.Sum(p => p.ContractValue)));

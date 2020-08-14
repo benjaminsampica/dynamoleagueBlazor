@@ -27,8 +27,8 @@ namespace Infrastructure.Identity.Services
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            var result = user != null 
-                ? await _userManager.AddToRoleAsync(user, role) 
+            var result = user != null
+                ? await _userManager.AddToRoleAsync(user, role)
                 : IdentityResult.Failed(new IdentityError { Description = "User not found." });
 
             return result.ToApplicationResult();
@@ -37,7 +37,7 @@ namespace Infrastructure.Identity.Services
         public async Task<Result> AddToTeamAsync(string userId, int teamId)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            if(user == null) return IdentityResult.Failed(new IdentityError { Description = "User not found." }).ToApplicationResult();
+            if (user == null) return IdentityResult.Failed(new IdentityError { Description = "User not found." }).ToApplicationResult();
 
             user.TeamId = teamId;
             var result = await _userManager.UpdateAsync(user);

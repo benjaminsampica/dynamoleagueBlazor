@@ -2,39 +2,40 @@
 using Application.Common.Mappings;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using Common;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Application.Teams.Queries
 {
-    public class GetPlayersListQuery : IRequest<ReadOnlyCollection<TeamListDto>>
+    public class GetPlayersListQuery : IRequest<ReadOnlyCollection<PlayerListDto>>
     {
-        internal sealed class Handler : IRequestHandler<GetPlayersListQuery, ReadOnlyCollection<TeamListDto>>
+        internal int TeamId { get; set; }
+
+        public GetPlayersListQuery(int teamId)
+        {
+            TeamId = teamId;
+        }
+
+        internal sealed class Handler : IRequestHandler<GetPlayersListQuery, ReadOnlyCollection<PlayerListDto>>
         {
             private readonly IDynamoLeagueDbContext _dbContext;
             private readonly IMapper _mapper;
-            private readonly IDateTimeProvider _dateTimeProvider;
 
-            public Handler(IDynamoLeagueDbContext dbContext, IMapper mapper, IDateTimeProvider dateTimeProvider)
+            public Handler(IDynamoLeagueDbContext dbContext, IMapper mapper)
             {
                 _dbContext = dbContext;
                 _mapper = mapper;
-                _dateTimeProvider = dateTimeProvider;
             }
 
-            public async Task<ReadOnlyCollection<TeamListDto>> Handle(GetPlayersListQuery request, CancellationToken cancellationToken = default)
+            public async Task<ReadOnlyCollection<PlayerListDto>> Handle(GetPlayersListQuery request, CancellationToken cancellationToken = default)
             {
-                return (await _dbContext.Teams
-                    .Include(p => p.Players)
-                    .Where(t => t.Players.Any(p => p.ContractLength >= _dateTimeProvider.Now.Year))
+                return (await _dbContext.Players
                     .AsNoTracking()
-                    .ProjectTo<TeamListDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<PlayerListDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken))
                     .AsReadOnly();
             }
@@ -44,16 +45,16 @@ namespace Application.Teams.Queries
     public class PlayerListDto : IMapFrom<Player>
     {
         public int Id { get; set; }
-        public string TeamLogoUrl { get; set; }
+        public int TeamId { get; set; }
+        public string Name { get; set; }
+        public string Position { get; set; }
         public string TeamName { get; set; }
-        public int PlayerCount { get; set; }
-        public int CapSpace { get; set; }
+        public string ContractValue { get; set; }
+        public int ContractLength { get; set; }
 
         public void Mapping(Profile profile)
-        {            
-            profile.CreateMap<Player, TeamListDto>()
-                .ForMember(p => p.PlayerCount, mo => mo.MapFrom(t => t.Players.Count))
-                .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.Players.Sum(p => p.ContractValue)));
+        {
+            profile.CreateMap<Player, PlayerListDto>();
         }
     }
 }

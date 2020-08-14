@@ -18,4 +18,8 @@
     <ProjectReference Include="..\..\Src\WebUI\WebUI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\" />
+  </ItemGroup>
+
 </Project>

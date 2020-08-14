@@ -1,0 +1,25 @@
+﻿@typeparam T
+
+<h1>@Title</h1>
+<hr />
+<Repeater Items="@Items">
+    <RepeaterContainerTemplate Context="ItemsContent">
+        <div class="table-responsive">
+            <table class="table table-borderless table-sm">
+                <thead>
+                    <tr>
+                        @HeaderColumns
+                    </tr>
+                </thead>
+                <tbody>
+                    @ItemsContent
+                </tbody>
+            </table>
+        </div>
+    </RepeaterContainerTemplate>
+    <ItemTemplate Context="Item">
+        <tr>
+            @BodyColumns(Item)
+        </tr>
+    </ItemTemplate>
+</Repeater>

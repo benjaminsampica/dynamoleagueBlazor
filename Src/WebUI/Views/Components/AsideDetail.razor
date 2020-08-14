@@ -1,0 +1,18 @@
+﻿<BasicComponent>
+    <aside class="text-center">
+        <img class="img-fluid" src="@ImageUrl" />
+        <hr class="mb-0" />
+        <h1 class="overflow-hidden text-secondary">@Title</h1>
+        <hr class="mt-0" />
+        <p>
+            @DetailsContent
+        </p>
+        <hr class="mt-0" />
+        @if (LinksContent != null)
+        {
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                @LinksContent
+            </div>
+        }
+    </aside>
+</BasicComponent>
