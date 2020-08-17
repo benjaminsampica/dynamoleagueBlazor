@@ -1,35 +1,35 @@
 ﻿using Application.Teams.Queries;
-using Ardalis.GuardClauses;
+using MediatR;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebUI.Models.Basics;
 
 namespace WebUI.Views.Components
 {
-    public partial class TeamTable : ComponentBase, IStatefulComponent
+    public partial class TeamTable : ComponentBase
     {
-        [CascadingParameter] public ComponentState ComponentState { get; set; }
-        [Parameter] public IReadOnlyCollection<TeamListDto> Teams { get; set; }
+        [Inject] IMediator Mediator { get; set; }
+        public IReadOnlyCollection<TeamListDto> Teams { get; set; } = Array.Empty<TeamListDto>();
+        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
 
-        protected override void OnParametersSet()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
-                VerifyParameters();
+                await SetTeamsAsync();
+                ComponentStateManager.SetContent();
             }
             catch
             {
-                ComponentState = ComponentState.Error;
-                StateHasChanged();
-
-                throw;
-
+                ComponentStateManager.SetError();
             }
         }
 
-        internal void VerifyParameters()
+        private async Task SetTeamsAsync()
         {
-            Guard.Against.NullOrEmpty(Teams, nameof(Teams));
+            Teams = await Mediator.Send(new GetTeamsListQuery());
         }
     }
 }

@@ -1,1 +1,21 @@
-﻿
+﻿@*<BasicComponent>
+    <TableBase Items="Players" Title="Teams List">
+        <HeaderColumns>
+            <th></th>
+            <th>Team Name</th>
+            <th class="text-center">Player Count</th>
+            <th class="text-center">Cap Space</th>
+        </HeaderColumns>
+        <BodyColumns Context="team">
+            <td>
+                @{ var detailsUrl = $"/Details/{team.Id}"; }<AnchorButtonBase Href="@detailsUrl" Title="View Team" OutlineClass="secondary" Icon="search"></AnchorButtonBase>
+                @{ var tradeUrl = $"/Trade/{team.Id}"; }<AnchorButtonBase Href="@tradeUrl" Title="Initiate Trade" OutlineClass="primary" Icon="exchange-alt"></AnchorButtonBase>
+            </td>
+            <td>
+                <InlineThumbnailWithText Name="@team.TeamName" ThumbnailUrl="@team.TeamLogoUrl"></InlineThumbnailWithText>
+            </td>
+            <td class="text-center">@team.PlayerCount</td>
+            <td class="text-center">@team.CapSpace</td>
+        </BodyColumns>
+    </TableBase>
+</BasicComponent>*@

@@ -7,7 +7,7 @@ using WebUI.Models.Basics;
 
 namespace WebUI.Views.Pages.Teams
 {
-    public partial class Detail : ComponentBase, IStatefulComponent
+    public partial class Detail : ComponentBase
     {
         [Inject] private IMediator Mediator { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }

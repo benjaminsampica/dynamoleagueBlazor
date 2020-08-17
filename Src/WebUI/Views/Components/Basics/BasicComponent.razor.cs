@@ -4,29 +4,33 @@ using WebUI.Models.Basics;
 
 namespace WebUI.Views.Components.Basics
 {
-    public partial class BasicComponent : ComponentBase, IStatefulComponent
+    public partial class BasicComponent : ComponentBase
     {
         [Parameter] public RenderFragment Loading { get; set; }
         [Parameter] public RenderFragment ChildContent { get; set; }
         [Parameter] public RenderFragment Error { get; set; }
-        [CascadingParameter] public ComponentState ComponentState { get; set; }
+        [Parameter] public ComponentState ParentComponentState { get; set; }
+        private ComponentStateManager ComponentStateManager;
 
         protected override void OnParametersSet()
         {
-            try
+            ComponentStateManager = new ComponentStateManager(ParentComponentState);
+            if (!ParentComponentState.HasError())
             {
-                VerifyParameters();
-            }
-            catch
-            {
-                ComponentState = ComponentState.Error;
-                StateHasChanged();
-
-                throw;
+                try
+                {
+                    VerifyInternalParameters();
+                }
+                catch
+                {
+                    ComponentStateManager.SetError();
+                    
+                    StateHasChanged();
+                }
             }
         }
 
-        internal void VerifyParameters()
+        protected void VerifyInternalParameters()
         {
             Guard.Against.Null(ChildContent, nameof(ChildContent));
         }

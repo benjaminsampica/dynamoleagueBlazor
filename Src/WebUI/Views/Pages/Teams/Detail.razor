@@ -1,16 +1,15 @@
 ﻿@page "/Details/{id:int}"
 
-<StatefulComponent ComponentState="ComponentState">
-    <div class="row">
-        <div class="col-md-3">
-            <AsideDetail ImageUrl="@ViewModel.TeamLogoUrl" Title="@ViewModel.TeamName">
-                <p>
-                    Cap Space: @ViewModel.CapSpace.ToString("C0")
-                </p>
-            </AsideDetail>
-        </div>
-        <div class="col-md-9">
-            <PlayerTable></PlayerTable>
-        </div>
+<div class="row">
+    <div class="col-md-3">
+        <AsideDetail ImageUrl="@ViewModel.TeamLogoUrl" Title="@ViewModel.TeamName">
+            <p>
+                Cap Space: @ViewModel.CapSpace.ToString("C0")
+            </p>
+        </AsideDetail>
     </div>
-</StatefulComponent>
+    <div class="col-md-9">
+        <PlayerTable></PlayerTable>
+    </div>
+</div>
+

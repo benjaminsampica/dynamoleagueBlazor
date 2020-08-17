@@ -12,7 +12,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_OutlineClass_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.OutlineClass, string.Empty);
+            var sut = CreateFake(p => p.OutlineClass, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -20,7 +20,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_OutlineClass_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.OutlineClass, null);
+            var sut = CreateFake(p => p.OutlineClass, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -28,7 +28,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_OutlineClass_WhenNotEmpty_DoesNotThrow()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.OutlineClass, "Test");
+            var sut = CreateFake(p => p.OutlineClass, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
@@ -36,7 +36,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Title_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Title, string.Empty);
+            var sut = CreateFake(p => p.Title, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -44,7 +44,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Title_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Title, null);
+            var sut = CreateFake(p => p.Title, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -52,7 +52,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Title_WhenNotEmpty_DoesNotThrow()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Title, "Test");
+            var sut = CreateFake(p => p.Title, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
@@ -60,7 +60,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Href_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Href, string.Empty);
+            var sut = CreateFake(p => p.Href, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -68,7 +68,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Href_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Href, null);
+            var sut = CreateFake(p => p.Href, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -76,7 +76,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Href_WhenNotEmpty_DoesNotThrow()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Href, "Test");
+            var sut = CreateFake(p => p.Href, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
@@ -84,7 +84,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Icon, string.Empty);
+            var sut = CreateFake(p => p.Icon, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -92,7 +92,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Icon, null);
+            var sut = CreateFake(p => p.Icon, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -100,7 +100,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenNotEmpty_DoesNotThrow()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Icon, "Test");
+            var sut = CreateFake(p => p.Icon, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
@@ -108,7 +108,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void GetMargin_Text_IsNull_ReturnsEmptyString()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Text, null);
+            var sut = CreateFake(p => p.Text, null);
 
             sut.GetMargin().Should().BeEmpty();
         }
@@ -116,7 +116,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void GetMargin_Text_IsEmpty_ReturnsEmptyString()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Text, string.Empty);
+            var sut = CreateFake(p => p.Text, string.Empty);
 
             sut.GetMargin().Should().BeEmpty();
         }
@@ -124,13 +124,13 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void GetMargin_Text_IsNotEmpty_ReturnsMarginClass()
         {
-            var sut = CreateFakeAnchorButtonBase(p => p.Text, "Test");
+            var sut = CreateFake(p => p.Text, "Test");
 
             sut.GetMargin().Should().NotBeNullOrEmpty();
         }
 
 
-        private AnchorButtonBase CreateFakeAnchorButtonBase(Expression<Func<AnchorButtonBase, string>> property, string value)
+        private AnchorButtonBase CreateFake(Expression<Func<AnchorButtonBase, string>> property, string value)
         {
             var fakeObject = new Filler<AnchorButtonBase>();
             fakeObject.Setup().OnProperty(property).Use(value);

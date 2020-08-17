@@ -1,6 +1,6 @@
 ﻿@using WebUI.Models.Basics
 
-@switch (ComponentState)
+@switch (ComponentStateManager.GetCurrentState())
 {
     case ComponentState.Loading:
         if (Loading == null)

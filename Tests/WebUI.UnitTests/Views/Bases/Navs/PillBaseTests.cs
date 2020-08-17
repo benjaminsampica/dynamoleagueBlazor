@@ -12,7 +12,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Text_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakePillBase(p => p.Text, string.Empty);
+            var sut = CreateFake(p => p.Text, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -20,7 +20,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Text_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakePillBase(p => p.Text, null);
+            var sut = CreateFake(p => p.Text, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -28,7 +28,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Text_WhenNotEmpty_IsValid()
         {
-            var sut = CreateFakePillBase(p => p.Text, "Test");
+            var sut = CreateFake(p => p.Text, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
@@ -36,7 +36,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenNull_ThrowsArgumentNullException()
         {
-            var sut = CreateFakePillBase(p => p.Icon, null);
+            var sut = CreateFake(p => p.Icon, null);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentNullException>();
         }
@@ -44,7 +44,7 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenEmpty_ThrowsArgumentException()
         {
-            var sut = CreateFakePillBase(p => p.Icon, string.Empty);
+            var sut = CreateFake(p => p.Icon, string.Empty);
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().Throw<ArgumentException>();
         }
@@ -52,12 +52,12 @@ namespace WebUI.UnitTests.Views.Bases.Navs
         [Fact]
         public void VerifyParameters_Icon_WhenNotEmpty_IsValid()
         {
-            var sut = CreateFakePillBase(p => p.Icon, "Test");
+            var sut = CreateFake(p => p.Icon, "Test");
 
             FluentActions.Invoking(() => sut.VerifyParameters()).Should().NotThrow();
         }
 
-        private PillBase CreateFakePillBase(Expression<Func<PillBase, string>> property, string value)
+        private PillBase CreateFake(Expression<Func<PillBase, string>> property, string value)
         {
             var fakeObject = new Filler<PillBase>();
             fakeObject.Setup()
