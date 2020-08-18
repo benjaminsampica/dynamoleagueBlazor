@@ -1,7 +1,7 @@
 ﻿using Application.Teams.Queries;
+using Ardalis.GuardClauses;
 using MediatR;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Threading.Tasks;
 using WebUI.Models.Basics;
 
@@ -11,17 +11,10 @@ namespace WebUI.Views.Pages.Teams
     {
         [Inject] private IMediator Mediator { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-
         [Parameter] public int Id { get; set; }
 
-        public ComponentState ComponentState { get; set; }
-
+        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
         private TeamDetailsDto ViewModel { get; set; }
-
-        protected override void OnParametersSet()
-        {
-            Id = Id != default ? Id : throw new ArgumentNullException(nameof(Id));
-        }
 
         protected override async Task OnInitializedAsync()
         {
@@ -33,19 +26,30 @@ namespace WebUI.Views.Pages.Teams
                 {
                     NavigationManager.NavigateTo("/NotFound");
                 }
-                else
-                {
-                    ComponentState = ComponentState.Content;
-                }
             }
             catch
             {
-                ComponentState = ComponentState.Error;
-                StateHasChanged();
-
-                throw;
+                ComponentStateManager.SetError();
             }
 
+        }
+
+        protected override void OnParametersSet()
+        {
+            try
+            {
+                VerifyParameters();
+                ComponentStateManager.SetContent();
+            }
+            catch
+            {
+                ComponentStateManager.SetError();
+            }
+        }
+
+        private void VerifyParameters()
+        {
+            Guard.Against.Default(Id, nameof(Id));
         }
 
         private async Task SetViewModelAsync()
