@@ -1,13 +1,14 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Components;
 using System;
-using WebUI.Models.Basics;
+using WebUI.Services;
 using WebUI.Views.Bases.Navs;
 
 namespace WebUI.Views.Components
 {
     public partial class AsideDetail : ComponentBase
     {
+        [Inject] public ComponentStateService ComponentStateService { get; set; }
         /// <summary>
         ///     Do not use this in tandem with <see cref="DetailsContent"/>.
         /// </summary>
@@ -19,18 +20,17 @@ namespace WebUI.Views.Components
         [Parameter] public RenderFragment<PillBase> LinksContent { get; set; }
         [Parameter] public string Title { get; set; }
         [Parameter] public string ImageUrl { get; set; }
-        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
             try
             {
                 VerifyParameters();
-                ComponentStateManager.SetContent();
+                ComponentStateService.SetContent();
             }
             catch
             {
-                ComponentStateManager.SetError();
+                ComponentStateService.SetError();
             }
         }
 

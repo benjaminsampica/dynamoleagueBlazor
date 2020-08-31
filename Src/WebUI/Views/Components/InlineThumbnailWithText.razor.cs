@@ -1,25 +1,25 @@
 ﻿using Ardalis.GuardClauses;
 using Microsoft.AspNetCore.Components;
-using WebUI.Models.Basics;
+using WebUI.Services;
 
 namespace WebUI.Views.Components
 {
     public partial class InlineThumbnailWithText : ComponentBase
     {
+        [Inject] public ComponentStateService ComponentStateService { get; set; }
         [Parameter] public string Name { get; set; }
         [Parameter] public string ThumbnailUrl { get; set; }
-        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
             try
             {
                 VerifyParameters();
-                ComponentStateManager.SetContent();
+                ComponentStateService.SetContent();
             }
             catch
             {
-                ComponentStateManager.SetError();
+                ComponentStateService.SetError();
             }
         }
 

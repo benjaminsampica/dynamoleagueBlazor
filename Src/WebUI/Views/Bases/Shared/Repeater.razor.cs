@@ -12,7 +12,7 @@ namespace WebUI.Views.Bases.Shared
 
         [Parameter] public RenderFragment<T> ItemTemplate { get; set; }
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
             VerifyParameters();
         }

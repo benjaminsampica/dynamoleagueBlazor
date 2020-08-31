@@ -3,48 +3,37 @@ using Ardalis.GuardClauses;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using WebUI.Models.Basics;
+using WebUI.Services;
 
 namespace WebUI.Views.Pages.Teams
 {
     public partial class Detail : ComponentBase
     {
+        [Inject] public ComponentStateService ComponentStateService { get; set; }
         [Inject] private IMediator Mediator { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Parameter] public int Id { get; set; }
 
-        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
         private TeamDetailsDto ViewModel { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
+                VerifyParameters();
                 await SetViewModelAsync();
 
                 if (ViewModel == null)
                 {
                     NavigationManager.NavigateTo("/NotFound");
                 }
+                ComponentStateService.SetContent();
             }
             catch
             {
-                ComponentStateManager.SetError();
+                ComponentStateService.SetError();
             }
 
-        }
-
-        protected override void OnParametersSet()
-        {
-            try
-            {
-                VerifyParameters();
-                ComponentStateManager.SetContent();
-            }
-            catch
-            {
-                ComponentStateManager.SetError();
-            }
         }
 
         private void VerifyParameters()

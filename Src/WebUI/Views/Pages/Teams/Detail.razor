@@ -1,6 +1,6 @@
 ﻿@page "/Details/{id:int}"
 
-<BasicComponent ParentComponentState="ComponentStateManager.GetCurrentState()">
+<BasicComponent ParentComponentState="ComponentStateService.GetCurrentState()">
     <div class="row">
         <div class="col-md-3">
             <AsideDetail ImageUrl="@ViewModel.TeamLogoUrl" Title="@ViewModel.TeamName">

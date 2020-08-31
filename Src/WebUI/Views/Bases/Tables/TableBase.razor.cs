@@ -19,7 +19,7 @@ namespace WebUI.Views.Bases.Tables
         [Parameter]
         public RenderFragment<T> BodyColumns { get; set; }
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
             VerifyParameters();
         }

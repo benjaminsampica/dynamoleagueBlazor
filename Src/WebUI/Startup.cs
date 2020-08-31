@@ -37,6 +37,7 @@ namespace WebUI
             services.AddApplication();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddTransient<ComponentStateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

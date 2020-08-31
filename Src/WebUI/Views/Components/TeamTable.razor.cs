@@ -4,26 +4,26 @@ using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebUI.Models.Basics;
+using WebUI.Services;
 
 namespace WebUI.Views.Components
 {
     public partial class TeamTable : ComponentBase
     {
+        [Inject] public ComponentStateService ComponentStateService { get; set; }
         [Inject] IMediator Mediator { get; set; }
         public IReadOnlyCollection<TeamListDto> Teams { get; set; } = Array.Empty<TeamListDto>();
-        private readonly ComponentStateManager ComponentStateManager = new ComponentStateManager();
 
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 await SetTeamsAsync();
-                ComponentStateManager.SetContent();
+                ComponentStateService.SetContent();
             }
             catch
             {
-                ComponentStateManager.SetError();
+                ComponentStateService.SetError();
             }
         }
 
