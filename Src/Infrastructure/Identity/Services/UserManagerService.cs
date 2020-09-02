@@ -14,7 +14,7 @@ namespace Infrastructure.Identity.Services
             _userManager = userManager;
         }
 
-        public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password, int teamId)
+        public async Task<(Result Result, string UserId)> CreateAsync(string userName, string password, int teamId)
         {
             var user = new ApplicationUser(userName, userName, teamId);
 

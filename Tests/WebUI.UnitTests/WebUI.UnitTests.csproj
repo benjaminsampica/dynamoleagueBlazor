@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\Src\WebUI\WebUI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>

@@ -11,7 +11,8 @@ namespace Persistence
         {
             services.AddDbContext<DynamoLeagueDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(DynamoLeagueDbContext).Assembly.FullName)));
 
             services.AddScoped<IDynamoLeagueDbContext>(provider => provider.GetService<DynamoLeagueDbContext>());
 

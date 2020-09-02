@@ -4,6 +4,7 @@ using Infrastructure.Email;
 using Infrastructure.Identity;
 using Infrastructure.Identity.Claims;
 using Infrastructure.Identity.Services;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,13 +18,13 @@ namespace Infrastructure
         {
             services.AddScoped<IUserManager, UserManagerService>();
             services.AddScoped<IRoleManager, RoleManagerService>();
-            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddTransient<IDateTimeService, DateTimeService>();
             services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddAuthentication();
             services.AddDbContext<ApplicationIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection")));
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationIdentityDbContext).Assembly.FullName)));
 
             services
                 .AddDefaultIdentity<ApplicationUser>()
@@ -39,6 +40,8 @@ namespace Infrastructure
                 options.Password.RequireNonAlphanumeric = false;
                 options.User.RequireUniqueEmail = true;
             });
+
+            services.AddAuthentication();
 
             return services;
         }

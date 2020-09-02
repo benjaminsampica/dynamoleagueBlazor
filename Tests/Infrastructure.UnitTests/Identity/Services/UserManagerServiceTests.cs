@@ -14,7 +14,7 @@ namespace Infrastructure.UnitTests.Identity.Services
         public async Task CreateUserAsync_Successful_ReturnsSuccessResult()
         {
             var sut = new UserManagerService(TestUserManager.GetSuccessfulManager());
-            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty, int.MaxValue);
+            var (result, _) = await sut.CreateAsync(string.Empty, string.Empty, int.MaxValue);
 
             result.Succeeded.Should().BeTrue();
         }
@@ -23,7 +23,7 @@ namespace Infrastructure.UnitTests.Identity.Services
         public async Task CreateUserAsync_Failed_ReturnsFailedResult()
         {
             var sut = new UserManagerService(TestUserManager.GetFailedManager());
-            var (result, _) = await sut.CreateUserAsync(string.Empty, string.Empty, int.MaxValue);
+            var (result, _) = await sut.CreateAsync(string.Empty, string.Empty, int.MaxValue);
 
             result.Succeeded.Should().BeFalse();
         }

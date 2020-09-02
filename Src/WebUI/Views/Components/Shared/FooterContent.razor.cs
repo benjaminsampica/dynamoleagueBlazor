@@ -5,7 +5,7 @@ namespace WebUI.Views.Components.Shared
 {
     public partial class FooterContent : ComponentBase
     {
-        [Inject] IDateTimeProvider DateTimeProvider { get; set; }
+        [Inject] IDateTimeService DateTimeProvider { get; set; }
 
         private int CurrentYear { get; set; }
 

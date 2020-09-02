@@ -1,15 +1,15 @@
 using Domain.Utilities;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace Domain.UnitTests
 {
+    [TestFixture]
     public class SalaryCapUtilitiesTests
     {
-        [InlineData(2020, 1050)]
-        [InlineData(2022, 1100)]
-        [InlineData(2050, 1800)]
-        [Theory]
+        [TestCase(2020, 1050)]
+        [TestCase(2022, 1100)]
+        [TestCase(2050, 1800)]
         public void GetCurrentCapValue_GivenYear_ReturnsCapValue(int year, int expectedCapValue)
             => SalaryCapUtilities.GetCurrentCapValue(year).Should().Be(expectedCapValue);
     }

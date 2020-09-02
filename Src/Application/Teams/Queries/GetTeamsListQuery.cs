@@ -19,9 +19,9 @@ namespace Application.Teams.Queries
         {
             private readonly IDynamoLeagueDbContext _dbContext;
             private readonly IMapper _mapper;
-            private readonly IDateTimeProvider _dateTimeProvider;
+            private readonly IDateTimeService _dateTimeProvider;
 
-            public Handler(IDynamoLeagueDbContext dbContext, IMapper mapper, IDateTimeProvider dateTimeProvider)
+            public Handler(IDynamoLeagueDbContext dbContext, IMapper mapper, IDateTimeService dateTimeProvider)
             {
                 _dbContext = dbContext;
                 _mapper = mapper;
