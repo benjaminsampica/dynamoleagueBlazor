@@ -27,8 +27,8 @@ namespace Infrastructure
                     b => b.MigrationsAssembly(typeof(ApplicationIdentityDbContext).Assembly.FullName)));
 
             services
-                .AddDefaultIdentity<ApplicationUser>()
-                .AddRoles<ApplicationRole>()
+                .AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
                 .AddClaimsPrincipalFactory<CurrentUserClaimsFactory>();
 

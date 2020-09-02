@@ -25,7 +25,7 @@ namespace Application.IntegrationTests
         private static int _currentUserTeamId;
 
         [OneTimeSetUp]
-        public void RunBeforeAnyTests()
+        public async Task RunBeforeAnyTestsAsync()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -62,18 +62,18 @@ namespace Application.IntegrationTests
                 TablesToIgnore = new[] { "__EFMigrationsHistory" }
             };
 
-            EnsureDatabase();
+            await EnsureDatabaseAsync();
         }
 
-        private void EnsureDatabase()
+        private async Task EnsureDatabaseAsync()
         {
             using var scope = _scopeFactory.CreateScope();
 
             var dynamoLeagueDbContext = scope.ServiceProvider.GetService<DynamoLeagueDbContext>();
             var identityDbContext = scope.ServiceProvider.GetService<ApplicationIdentityDbContext>();
 
-            dynamoLeagueDbContext.Database.Migrate();
-            identityDbContext.Database.Migrate();
+            await dynamoLeagueDbContext.Database.MigrateAsync();
+            await identityDbContext.Database.MigrateAsync();
         }
 
         public static async Task ResetState()

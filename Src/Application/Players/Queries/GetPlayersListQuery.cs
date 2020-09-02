@@ -6,6 +6,7 @@ using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ namespace Application.Teams.Queries
             public async Task<ReadOnlyCollection<PlayerListDto>> Handle(GetPlayersListQuery request, CancellationToken cancellationToken = default)
             {
                 return (await _dbContext.Players
+                    .Where(p => p.TeamId == request.TeamId)
                     .AsNoTracking()
                     .ProjectTo<PlayerListDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken))

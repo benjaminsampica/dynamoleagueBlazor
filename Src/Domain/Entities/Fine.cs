@@ -4,6 +4,7 @@ namespace Domain.Entities
 {
     public class Fine : BaseEntity
     {
+        private Fine() { }
         public Fine(decimal fineAmount, string fineReason, int playerId)
         {
             FineAmount = fineAmount;

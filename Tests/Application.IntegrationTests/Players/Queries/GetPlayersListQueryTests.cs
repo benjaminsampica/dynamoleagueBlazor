@@ -11,17 +11,34 @@ namespace Application.IntegrationTests.Players.Queries
 
     public class GetPlayersListQueryTests : TestBase
     {
-        [Test]
-        public async Task GivenTeamIdOfOne_ShouldReturnOnePlayer()
+        private int _teamId;
+
+        [SetUp]
+        public async Task Initialize()
         {
-            var teamId = 1;
-            var fakePlayer = new Filler<Player>();
-            fakePlayer.Setup()
-                .OnProperty(p => p.TeamId).Use(teamId);
+            var fillerTeam = new Filler<Team>();
+            fillerTeam.Setup()
+                .IgnoreInheritance()
+                .OnProperty(p => p.Players).IgnoreIt();
+            var stubTeam = fillerTeam.Create();
 
-            await AddAsync(fakePlayer.Create());
+            await AddAsync(stubTeam);
+            _teamId = stubTeam.Id;
 
-            var query = new GetPlayersListQuery(teamId);
+            var fillerPlayer = new Filler<Player>();
+            fillerPlayer.Setup()
+                .IgnoreInheritance()
+                .OnProperty(p => p.TeamId).Use(stubTeam.Id)
+                .OnProperty(p => p.Bids).IgnoreIt()
+                .OnProperty(p => p.Team).IgnoreIt();
+
+            await AddAsync(fillerPlayer.Create());
+        }
+
+        [Test]
+        public async Task GivenMatchingTeamId_ShouldReturnOnePlayer()
+        {
+            var query = new GetPlayersListQuery(_teamId);
 
             var result = await SendAsync(query);
 
@@ -30,16 +47,9 @@ namespace Application.IntegrationTests.Players.Queries
         }
 
         [Test]
-        public async Task GivenTeamIdOfOne_ShouldReturnNoPlayers()
+        public async Task GivenNonMatchingTeamId_ShouldReturnNoPlayers()
         {
-            var teamId = 2;
-            var fakePlayer = new Filler<Player>();
-            fakePlayer.Setup()
-                .OnProperty(p => p.TeamId).Use(teamId);
-
-            await AddAsync(fakePlayer.Create());
-
-            var query = new GetPlayersListQuery(1);
+            var query = new GetPlayersListQuery(int.MaxValue);
 
             var result = await SendAsync(query);
 
