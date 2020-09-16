@@ -20,6 +20,6 @@ namespace Domain.Entities
         public Team Team { get; set; }
         public ICollection<Bid> Bids { get; private set; }
 
-        public static Expression<Func<Player, bool>> IsActive(int year) => player => player.ContractValue >= year;
+        public static Expression<Func<Player, bool>> IsActive(int year) => player => player.ContractLength >= year;
     }
 }
