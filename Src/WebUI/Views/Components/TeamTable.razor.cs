@@ -21,8 +21,9 @@ namespace WebUI.Views.Components
                 await SetTeamsAsync();
                 ComponentStateService.SetContent();
             }
-            catch
+            catch (Exception e)
             {
+                e = e;
                 ComponentStateService.SetError();
             }
         }

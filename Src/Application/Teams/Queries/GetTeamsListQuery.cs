@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Common;
 using Domain.Entities;
+using LinqKit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
@@ -30,9 +31,8 @@ namespace Application.Teams.Queries
 
             public async Task<ReadOnlyCollection<TeamListDto>> Handle(GetTeamsListQuery request, CancellationToken cancellationToken = default)
             {
-                return (await _dbContext.Teams
-                    .Include(p => p.Players)
-                    .Where(t => t.Players.Any(p => p.ContractLength >= _dateTimeProvider.Now.Year))
+                return (await _dbContext.Teams.AsExpandable()
+                    .Include(t => t.Players.Where(Player.IsActive(_dateTimeProvider.Now.Year).Compile()))
                     .AsNoTracking()
                     .ProjectTo<TeamListDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken))
@@ -53,7 +53,7 @@ namespace Application.Teams.Queries
         {
             profile.CreateMap<Team, TeamListDto>()
                 .ForMember(p => p.PlayerCount, mo => mo.MapFrom(t => t.Players.Count))
-                .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.Players.Sum(p => p.ContractValue)));
+                .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.CapSpace()));
         }
     }
 }

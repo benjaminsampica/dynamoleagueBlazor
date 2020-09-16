@@ -62,7 +62,7 @@ namespace Application.Teams.Queries
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Team, TeamDetailsDto>()
-                .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.Players.Sum(p => p.ContractValue)));
+                .ForMember(p => p.CapSpace, mo => mo.MapFrom(t => t.CapSpace()));
         }
     }
 }

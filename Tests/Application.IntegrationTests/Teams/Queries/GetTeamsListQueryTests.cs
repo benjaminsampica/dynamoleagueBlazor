@@ -2,6 +2,8 @@
 using Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Tynamix.ObjectFiller;
 
@@ -9,10 +11,8 @@ namespace Application.IntegrationTests.Players.Queries
 {
     using static Testing;
 
-    public class GetPlayersListQueryTests : TestBase
+    public class GetTeamsListQueryTests : TestBase
     {
-        private int _teamId;
-
         [SetUp]
         public async Task Initialize()
         {
@@ -23,12 +23,13 @@ namespace Application.IntegrationTests.Players.Queries
             var stubTeam = fillerTeam.Create();
 
             await AddAsync(stubTeam);
-            _teamId = stubTeam.Id;
 
             var fillerPlayer = new Filler<Player>();
             fillerPlayer.Setup()
                 .IgnoreInheritance()
                 .OnProperty(p => p.TeamId).Use(stubTeam.Id)
+                .OnProperty(p => p.ContractLength).Use(DateTime.Today.Year - 1)
+                .OnProperty(p => p.ContractValue).Use(100)
                 .OnProperty(p => p.Bids).IgnoreIt()
                 .OnProperty(p => p.Team).IgnoreIt();
 
@@ -36,25 +37,15 @@ namespace Application.IntegrationTests.Players.Queries
         }
 
         [Test]
-        public async Task GivenMatchingTeamId_ThenReturnOnePlayer()
+        public async Task GivenOneTeam_WhenNoPlayerIsActive_ThenReturnOneTeamWithZeroCapSpace()
         {
-            var query = new GetPlayersListQuery(_teamId);
+            var query = new GetTeamsListQuery();
 
             var result = await SendAsync(query);
 
             result.Should().NotBeNull();
             result.Count.Should().Be(1);
-        }
-
-        [Test]
-        public async Task GivenNonMatchingTeamId_ThenReturnNoPlayers()
-        {
-            var query = new GetPlayersListQuery(int.MaxValue);
-
-            var result = await SendAsync(query);
-
-            result.Should().NotBeNull();
-            result.Should().BeEmpty();
+            result.First().CapSpace.Should().Be(0);
         }
     }
 }
